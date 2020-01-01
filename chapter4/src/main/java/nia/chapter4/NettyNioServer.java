@@ -39,9 +39,7 @@ public class NettyNioServer {
                                               public void channelActive(ChannelHandlerContext ctx) throws Exception {
                                                   // 将消息写到客户端，并添加ChannelFutureListener，
                                                   ctx.writeAndFlush(buf.duplicate())
-                                                          .addListener(
-                                                                  // 以便消息一被写完就关闭连接
-                                                                  ChannelFutureListener.CLOSE);
+                                                          .addListener(ChannelFutureListener.CLOSE);// 以便消息一被写完就关闭连接
                                               }
                                           };
                                           ch.pipeline().addLast(adapter);
