@@ -14,37 +14,37 @@ import static io.netty.channel.DummyChannelHandlerContext.DUMMY_INSTANCE;
 
 /**
  * Created by kerr.
- *
+ * <p>
  * 代码清单 5-1 支撑数组
- *
+ * <p>
  * 代码清单 5-2 访问直接缓冲区的数据
- *
+ * <p>
  * 代码清单 5-3 使用 ByteBuffer 的复合缓冲区模式
- *
+ * <p>
  * 代码清单 5-4 使用 CompositeByteBuf 的复合缓冲区模式
- *
+ * <p>
  * 代码清单 5-5 访问 CompositeByteBuf 中的数据
- *
+ * <p>
  * 代码清单 5-6 访问数据
- *
+ * <p>
  * 代码清单 5-7 读取所有数据
- *
+ * <p>
  * 代码清单 5-8 写数据
- *
+ * <p>
  * 代码清单 5-9 使用 ByteBufProcessor 来寻找\r
- *
+ * <p>
  * 代码清单 5-10 对 ByteBuf 进行切片
- *
+ * <p>
  * 代码清单 5-11 复制一个 ByteBuf
- *
+ * <p>
  * 代码清单 5-12 get()和 set()方法的用法
- *
+ * <p>
  * 代码清单 5-13 ByteBuf 上的 read()和 write()操作
- *
+ * <p>
  * 代码清单 5-14 获取一个到 ByteBufAllocator 的引用
- *
+ * <p>
  * 代码清单 5-15 引用计数
- *
+ * <p>
  * 代码清单 5-16 释放引用计数的对象
  */
 public class ByteBufExamples {
@@ -52,6 +52,7 @@ public class ByteBufExamples {
     private static final ByteBuf BYTE_BUF_FROM_SOMEWHERE = Unpooled.buffer(1024);
     private static final Channel CHANNEL_FROM_SOMEWHERE = new NioSocketChannel();
     private static final ChannelHandlerContext CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE = DUMMY_INSTANCE;
+
     /**
      * 代码清单 5-1 支撑数组
      */
@@ -93,7 +94,7 @@ public class ByteBufExamples {
      */
     public static void byteBufferComposite(ByteBuffer header, ByteBuffer body) {
         // Use an array to hold the message parts
-        ByteBuffer[] message =  new ByteBuffer[]{ header, body };
+        ByteBuffer[] message = new ByteBuffer[]{header, body};
 
         // Create a new ByteBuffer and use copy to merge the header and body
         ByteBuffer message2 =
@@ -171,7 +172,7 @@ public class ByteBufExamples {
 
     /**
      * 代码清单 5-9 使用 ByteBufProcessor 来寻找\r
-     *
+     * <p>
      * use {@link io.netty.buffer.ByteBufProcessor in Netty 4.0.x}
      */
     public static void byteProcessor() {
@@ -181,7 +182,7 @@ public class ByteBufExamples {
 
     /**
      * 代码清单 5-9 使用 ByteBufProcessor 来寻找\r
-     *
+     * <p>
      * use {@link io.netty.util.ByteProcessor in Netty 4.1.x}
      */
     public static void byteBufProcessor() {
@@ -201,7 +202,7 @@ public class ByteBufExamples {
         //将打印“Netty in Action”
         System.out.println(sliced.toString(utf8));
         //更新索引 0 处的字节
-        buf.setByte(0, (byte)'J');
+        buf.setByte(0, (byte) 'J');
         //将会成功，因为数据是共享的，对其中一个所做的更改对另外一个也是可见的
         assert buf.getByte(0) == sliced.getByte(0);
     }
@@ -218,7 +219,7 @@ public class ByteBufExamples {
         //将打印“Netty in Action”
         System.out.println(copy.toString(utf8));
         //更新索引 0 处的字节
-        buf.setByte(0, (byte)'J');
+        buf.setByte(0, (byte) 'J');
         //将会成功，因为数据不是共享的
         assert buf.getByte(0) != copy.getByte(0);
     }
@@ -231,14 +232,14 @@ public class ByteBufExamples {
         //创建一个新的 ByteBuf以保存给定字符串的字节
         ByteBuf buf = Unpooled.copiedBuffer("Netty in Action rocks!", utf8);
         //打印第一个字符'N'
-        System.out.println((char)buf.getByte(0));
+        System.out.println((char) buf.getByte(0));
         //存储当前的 readerIndex 和 writerIndex
         int readerIndex = buf.readerIndex();
         int writerIndex = buf.writerIndex();
         //将索引 0 处的字 节更新为字符'B'
-        buf.setByte(0, (byte)'B');
+        buf.setByte(0, (byte) 'B');
         //打印第一个字符，现在是'B'
-        System.out.println((char)buf.getByte(0));
+        System.out.println((char) buf.getByte(0));
         //将会成功，因为这些操作并不会修改相应的索引
         assert readerIndex == buf.readerIndex();
         assert writerIndex == buf.writerIndex();
@@ -252,24 +253,25 @@ public class ByteBufExamples {
         //创建一个新的 ByteBuf 以保存给定字符串的字节
         ByteBuf buf = Unpooled.copiedBuffer("Netty in Action rocks!", utf8);
         //打印第一个字符'N'
-        System.out.println((char)buf.readByte());
+        System.out.println((char) buf.readByte());
         //存储当前的readerIndex
         int readerIndex = buf.readerIndex();
         //存储当前的writerIndex
         int writerIndex = buf.writerIndex();
         //将字符 '?'追加到缓冲区
-        buf.writeByte((byte)'?');
+        buf.writeByte((byte) '?');
         assert readerIndex == buf.readerIndex();
         //将会成功，因为 writeByte()方法移动了 writerIndex
         assert writerIndex != buf.writerIndex();
     }
 
-    private static void handleArray(byte[] array, int offset, int len) {}
+    private static void handleArray(byte[] array, int offset, int len) {
+    }
 
     /**
      * 代码清单 5-14 获取一个到 ByteBufAllocator 的引用
      */
-    public static void obtainingByteBufAllocatorReference(){
+    public static void obtainingByteBufAllocatorReference() {
         Channel channel = CHANNEL_FROM_SOMEWHERE; //get reference form somewhere
         //从 Channel 获取一个到ByteBufAllocator 的引用
         ByteBufAllocator allocator = channel.alloc();
@@ -282,8 +284,8 @@ public class ByteBufExamples {
 
     /**
      * 代码清单 5-15 引用计数
-     * */
-    public static void referenceCounting(){
+     */
+    public static void referenceCounting() {
         Channel channel = CHANNEL_FROM_SOMEWHERE; //get reference form somewhere
         //从 Channel 获取ByteBufAllocator
         ByteBufAllocator allocator = channel.alloc();
@@ -298,7 +300,7 @@ public class ByteBufExamples {
     /**
      * 代码清单 5-16 释放引用计数的对象
      */
-    public static void releaseReferenceCountedObject(){
+    public static void releaseReferenceCountedObject() {
         ByteBuf buffer = BYTE_BUF_FROM_SOMEWHERE; //get reference form somewhere
         //减少到该对象的活动引用。当减少到 0 时，该对象被释放，并且该方法返回 true
         boolean released = buffer.release();
