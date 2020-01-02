@@ -11,7 +11,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-//扩展 SimpleChannelInboundHandler，并处理 TextWebSocketFrame 消息
+// 扩展 SimpleChannelInboundHandler，并处理 TextWebSocketFrame 消息
 public class TextWebSocketFrameHandler
     extends SimpleChannelInboundHandler<TextWebSocketFrame> {
     private final ChannelGroup group;
@@ -20,11 +20,11 @@ public class TextWebSocketFrameHandler
         this.group = group;
     }
 
-    //重写 userEventTriggered()方法以处理自定义事件
+    // 重写 userEventTriggered()方法以处理自定义事件
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx,
         Object evt) throws Exception {
-        //如果该事件表示握手成功，则从该 ChannelPipeline 中移除HttpRequest-Handler，因为将不会接收到任何HTTP消息了
+        // 如果该事件表示握手成功，则从该 ChannelPipeline 中移除HttpRequest-Handler，因为将不会接收到任何HTTP消息了
         if (evt == WebSocketServerProtocolHandler
              .ServerHandshakeStateEvent.HANDSHAKE_COMPLETE) {
             ctx.pipeline().remove(HttpRequestHandler.class);

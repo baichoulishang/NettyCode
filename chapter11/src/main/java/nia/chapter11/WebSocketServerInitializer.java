@@ -21,15 +21,15 @@ public class WebSocketServerInitializer extends ChannelInitializer<Channel> {
     protected void initChannel(Channel ch) throws Exception {
         ch.pipeline().addLast(
             new HttpServerCodec(),
-            //为握手提供聚合的 HttpRequest
+            // 为握手提供聚合的 HttpRequest
             new HttpObjectAggregator(65536),
-            //如果被请求的端点是"/websocket"，则处理该升级握手
+            // 如果被请求的端点是"/websocket"，则处理该升级握手
             new WebSocketServerProtocolHandler("/websocket"),
-            //TextFrameHandler 处理 TextWebSocketFrame
+            // TextFrameHandler 处理 TextWebSocketFrame
             new TextFrameHandler(),
-            //BinaryFrameHandler 处理 BinaryWebSocketFrame
+            // BinaryFrameHandler 处理 BinaryWebSocketFrame
             new BinaryFrameHandler(),
-            //ContinuationFrameHandler 处理 ContinuationWebSocketFrame
+            // ContinuationFrameHandler 处理 ContinuationWebSocketFrame
             new ContinuationFrameHandler());
     }
 

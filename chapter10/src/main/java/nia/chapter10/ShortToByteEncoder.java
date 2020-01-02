@@ -9,12 +9,12 @@ import io.netty.handler.codec.MessageToByteEncoder;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-//扩展了MessageToByteEncoder
+// 扩展了MessageToByteEncoder
 public class ShortToByteEncoder extends MessageToByteEncoder<Short> {
     @Override
     public void encode(ChannelHandlerContext ctx, Short msg, ByteBuf out)
         throws Exception {
-        //将 Short 写入 ByteBuf 中
+        // 将 Short 写入 ByteBuf 中
         out.writeShort(msg);
     }
 }

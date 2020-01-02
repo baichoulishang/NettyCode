@@ -12,7 +12,7 @@ import javax.net.ssl.SSLEngine;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-//扩展 ChatServerInitializer 以添加加密
+// 扩展 ChatServerInitializer 以添加加密
 public class SecureChatServerInitializer extends ChatServerInitializer {
     private final SslContext context;
 
@@ -24,11 +24,11 @@ public class SecureChatServerInitializer extends ChatServerInitializer {
 
     @Override
     protected void initChannel(Channel ch) throws Exception {
-        //调用父类的 initChannel() 方法
+        // 调用父类的 initChannel() 方法
         super.initChannel(ch);
         SSLEngine engine = context.newEngine(ch.alloc());
         engine.setUseClientMode(false);
-        //将 SslHandler 添加到 ChannelPipeline 中
+        // 将 SslHandler 添加到 ChannelPipeline 中
         ch.pipeline().addFirst(new SslHandler(engine));
     }
 }

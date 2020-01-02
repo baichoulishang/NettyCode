@@ -15,7 +15,7 @@ import java.net.URL;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-//扩展 SimpleChannelInboundHandler 以处理 FullHttpRequest 消息
+// 扩展 SimpleChannelInboundHandler 以处理 FullHttpRequest 消息
 public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     private final String wsUri;
     private static final File INDEX;
@@ -49,7 +49,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
             if (HttpHeaders.is100ContinueExpected(request)) {
                 send100Continue(ctx);
             }
-            //读取 index.html
+            // 读取 index.html
             RandomAccessFile file = new RandomAccessFile(INDEX, "r");
             HttpResponse response = new DefaultHttpResponse(
                 request.getProtocolVersion(), HttpResponseStatus.OK);
@@ -57,7 +57,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
                 HttpHeaders.Names.CONTENT_TYPE,
                 "text/html; charset=UTF-8");
             boolean keepAlive = HttpHeaders.isKeepAlive(request);
-            //如果请求了keep-alive，则添加所需要的 HTTP 头信息
+            // 如果请求了keep-alive，则添加所需要的 HTTP 头信息
             if (keepAlive) {
                 response.headers().set(
                     HttpHeaders.Names.CONTENT_LENGTH, file.length());

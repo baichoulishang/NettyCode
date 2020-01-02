@@ -23,7 +23,7 @@ public class ChannelFutures {
     public static void addingChannelFutureListener(){
         Channel channel = CHANNEL_FROM_SOMEWHERE; // get reference to pipeline;
         ByteBuf someMessage = SOME_MSG_FROM_SOMEWHERE; // get reference to pipeline;
-        //...
+        // ...
         io.netty.channel.ChannelFuture future = channel.write(someMessage);
         future.addListener(new ChannelFutureListener() {
             @Override

@@ -9,13 +9,13 @@ import io.netty.handler.codec.MessageToByteEncoder;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-//扩展了MessageToByteEncoder
+// 扩展了MessageToByteEncoder
 public class CharToByteEncoder extends
     MessageToByteEncoder<Character> {
     @Override
     public void encode(ChannelHandlerContext ctx, Character msg,
         ByteBuf out) throws Exception {
-        //将 Character 解码为 char，并将其写入到出站 ByteBuf 中
+        // 将 Character 解码为 char，并将其写入到出站 ByteBuf 中
         out.writeChar(msg);
     }
 }

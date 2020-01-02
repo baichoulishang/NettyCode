@@ -8,7 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * Fork of <a href="http://netty.io">Netty</a>
+ * Fork of <a href="http:// netty.io">Netty</a>
  */
 public final class BogusKeyStore {
     private static final short[] DATA =

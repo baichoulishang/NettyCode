@@ -11,7 +11,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 /**
- * Fork of <a href="http://netty.io">Netty</a>
+ * Fork of <a href="http:// netty.io">Netty</a>
  */
 public class BogusTrustManagerFactory
     extends TrustManagerFactorySpi {

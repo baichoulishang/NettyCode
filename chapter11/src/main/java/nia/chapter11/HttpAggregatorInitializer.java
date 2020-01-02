@@ -23,13 +23,13 @@ public class HttpAggregatorInitializer extends ChannelInitializer<Channel> {
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         if (isClient) {
-            //如果是客户端，则添加 HttpClientCodec
+            // 如果是客户端，则添加 HttpClientCodec
             pipeline.addLast("codec", new HttpClientCodec());
         } else {
-            //如果是服务器，则添加 HttpServerCodec
+            // 如果是服务器，则添加 HttpServerCodec
             pipeline.addLast("codec", new HttpServerCodec());
         }
-        //将最大的消息大小为 512 KB 的 HttpObjectAggregator 添加到 ChannelPipeline
+        // 将最大的消息大小为 512 KB 的 HttpObjectAggregator 添加到 ChannelPipeline
         pipeline.addLast("aggregator",
                 new HttpObjectAggregator(512 * 1024));
     }

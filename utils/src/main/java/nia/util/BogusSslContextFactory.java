@@ -6,7 +6,7 @@ import java.security.KeyStore;
 import java.security.Security;
 
 /**
- * Fork of <a href="http://netty.io">Netty</a>
+ * Fork of <a href="http:// netty.io">Netty</a>
  */
 public final class BogusSslContextFactory {
     private static final String PROTOCOL = "TLS";

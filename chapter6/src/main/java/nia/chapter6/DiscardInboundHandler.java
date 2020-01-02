@@ -11,11 +11,11 @@ import io.netty.util.ReferenceCountUtil;
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
 @Sharable
-//扩展了ChannelInboundandlerAdapter
+// 扩展了ChannelInboundandlerAdapter
 public class DiscardInboundHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        //通过调用 ReferenceCountUtil.release()方法释放资源
+        // 通过调用 ReferenceCountUtil.release()方法释放资源
         ReferenceCountUtil.release(msg);
     }
 }

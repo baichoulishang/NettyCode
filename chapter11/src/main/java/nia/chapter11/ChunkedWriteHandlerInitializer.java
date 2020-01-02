@@ -26,11 +26,11 @@ public class ChunkedWriteHandlerInitializer
     @Override
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
-        //将 SslHandler 添加到 ChannelPipeline 中
+        // 将 SslHandler 添加到 ChannelPipeline 中
         pipeline.addLast(new SslHandler(sslCtx.newEngine(ch.alloc())));
-        //添加 ChunkedWriteHandler 以处理作为 ChunkedInput 传入的数据
+        // 添加 ChunkedWriteHandler 以处理作为 ChunkedInput 传入的数据
         pipeline.addLast(new ChunkedWriteHandler());
-        //一旦连接建立，WriteStreamHandler 就开始写文件数据
+        // 一旦连接建立，WriteStreamHandler 就开始写文件数据
         pipeline.addLast(new WriteStreamHandler());
     }
 
@@ -38,7 +38,7 @@ public class ChunkedWriteHandlerInitializer
         extends ChannelInboundHandlerAdapter {
 
         @Override
-        //当连接建立时，channelActive() 方法将使用 ChunkedInput 写文件数据
+        // 当连接建立时，channelActive() 方法将使用 ChunkedInput 写文件数据
         public void channelActive(ChannelHandlerContext ctx)
             throws Exception {
             super.channelActive(ctx);

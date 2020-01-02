@@ -22,14 +22,14 @@ public class IdleStateHandlerInitializer extends ChannelInitializer<Channel>
         pipeline.addLast(
                 //(1) IdleStateHandler 将在被触发时发送一个IdleStateEvent 事件
                 new IdleStateHandler(0, 0, 60, TimeUnit.SECONDS));
-        //将一个 HeartbeatHandler 添加到ChannelPipeline中
+        // 将一个 HeartbeatHandler 添加到ChannelPipeline中
         pipeline.addLast(new HeartbeatHandler());
     }
 
-    //实现 userEventTriggered() 方法以发送心跳消息
+    // 实现 userEventTriggered() 方法以发送心跳消息
     public static final class HeartbeatHandler
         extends ChannelInboundHandlerAdapter {
-        //发送到远程节点的心跳消息
+        // 发送到远程节点的心跳消息
         private static final ByteBuf HEARTBEAT_SEQUENCE =
                 Unpooled.unreleasableBuffer(Unpooled.copiedBuffer(
                 "HEARTBEAT", CharsetUtil.ISO_8859_1));
@@ -42,7 +42,7 @@ public class IdleStateHandlerInitializer extends ChannelInitializer<Channel>
                      .addListener(
                          ChannelFutureListener.CLOSE_ON_FAILURE);
             } else {
-                //不是 IdleStateEvent 事件，所以将它传递给下一个 ChannelInboundHandler
+                // 不是 IdleStateEvent 事件，所以将它传递给下一个 ChannelInboundHandler
                 super.userEventTriggered(ctx, evt);
             }
         }

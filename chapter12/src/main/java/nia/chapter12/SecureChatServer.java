@@ -14,7 +14,7 @@ import java.net.InetSocketAddress;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-//SecureChatServer 扩展 ChatServer 以支持加密
+// SecureChatServer 扩展 ChatServer 以支持加密
 public class SecureChatServer extends ChatServer {
     private final SslContext context;
 
@@ -25,7 +25,7 @@ public class SecureChatServer extends ChatServer {
     @Override
     protected ChannelInitializer<Channel> createInitializer(
         ChannelGroup group) {
-        //返回之前创建的 SecureChatServerInitializer 以启用加密
+        // 返回之前创建的 SecureChatServerInitializer 以启用加密
         return new SecureChatServerInitializer(group, context);
     }
 

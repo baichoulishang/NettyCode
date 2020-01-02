@@ -11,13 +11,13 @@ import java.util.List;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-//扩展了ByteToMessageDecoder
+// 扩展了ByteToMessageDecoder
 public class ByteToCharDecoder extends ByteToMessageDecoder {
     @Override
     public void decode(ChannelHandlerContext ctx, ByteBuf in,
         List<Object> out) throws Exception {
         if (in.readableBytes() >= 2) {
-            //将一个或者多个 Character 对象添加到传出的 List 中
+            // 将一个或者多个 Character 对象添加到传出的 List 中
             out.add(in.readChar());
         }
     }
