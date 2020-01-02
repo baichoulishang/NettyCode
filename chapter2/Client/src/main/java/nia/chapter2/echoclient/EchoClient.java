@@ -49,8 +49,7 @@ public class EchoClient {
         }
     }
 
-    public static void main(String[] args)
-            throws Exception {
+    public static void main(String[] args) throws Exception {
         // if (args.length != 2) {
         //     System.err.println("Usage: " + EchoClient.class.getSimpleName() + " <host> <port>"
         //     );
