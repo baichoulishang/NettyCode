@@ -26,6 +26,7 @@ public class ChannelOperationExamples {
      */
     public static void writingToChannel() {
         Channel channel = CHANNEL_FROM_SOMEWHERE; //  Get the channel reference from somewhere
+        // 我也可以改
         // 创建持有要写数据的 ByteBuf
         ByteBuf buf = Unpooled.copiedBuffer("your data", CharsetUtil.UTF_8);
         ChannelFuture cf = channel.writeAndFlush(buf);
