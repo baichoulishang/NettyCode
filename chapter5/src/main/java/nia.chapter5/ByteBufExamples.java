@@ -79,6 +79,7 @@ public class ByteBufExamples {
     public static void directBuffer() {
         ByteBuf directBuf = BYTE_BUF_FROM_SOMEWHERE; // get reference form somewhere
         // 检查 ByteBuf 是否由数组支撑。如果不是，则这是一个直接缓冲区
+        // 否则,就是用上面那个堆缓冲区来处理
         if (!directBuf.hasArray()) {
             // 获取可读字节数
             int length = directBuf.readableBytes();
@@ -97,12 +98,13 @@ public class ByteBufExamples {
     public static void byteBufferComposite(ByteBuffer header, ByteBuffer body) {
         // Use an array to hold the message parts
         ByteBuffer[] message = new ByteBuffer[]{header, body};
-
-        // Create a new ByteBuffer and use copy to merge the header and body
-        ByteBuffer message2 =
-                ByteBuffer.allocate(header.remaining() + body.remaining());
+        // 创建一个ByteBuffer用来保存消息副本
+        ByteBuffer message2 = ByteBuffer.allocate(header.remaining() + body.remaining());
+        // 填入头部
         message2.put(header);
+        // 填入主体
         message2.put(body);
+        // 让ByteBuffer做好被读取的准备
         message2.flip();
     }
 
@@ -112,6 +114,7 @@ public class ByteBufExamples {
      */
     public static void byteBufComposite() {
         CompositeByteBuf messageBuf = Unpooled.compositeBuffer();
+        // 创建头部和主体
         ByteBuf headerBuf = BYTE_BUF_FROM_SOMEWHERE; // can be backing or direct
         ByteBuf bodyBuf = BYTE_BUF_FROM_SOMEWHERE;   // can be backing or direct
         // 将 ByteBuf 实例追加到 CompositeByteBuf
