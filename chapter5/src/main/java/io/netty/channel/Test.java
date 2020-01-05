@@ -2,7 +2,6 @@ package io.netty.channel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @author 陈宜康

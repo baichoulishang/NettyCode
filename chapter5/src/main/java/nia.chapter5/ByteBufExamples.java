@@ -160,6 +160,7 @@ public class ByteBufExamples {
     public static void readAllData() {
         ByteBuf buffer = BYTE_BUF_FROM_SOMEWHERE; // get reference form somewhere
         while (buffer.isReadable()) {
+            // 虽然没有传入索引,但是还是会消耗readerIndex
             System.out.println(buffer.readByte());
         }
     }

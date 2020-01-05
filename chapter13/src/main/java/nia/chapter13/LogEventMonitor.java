@@ -21,20 +21,37 @@ public class LogEventMonitor {
         bootstrap = new Bootstrap();
         // 引导该 NioDatagramChannel
         bootstrap.group(group)
-            .channel(NioDatagramChannel.class)
-            // 设置套接字选项 SO_BROADCAST
-            .option(ChannelOption.SO_BROADCAST, true)
-            .handler( new ChannelInitializer<Channel>() {
-                @Override
-                protected void initChannel(Channel channel)
-                    throws Exception {
-                    ChannelPipeline pipeline = channel.pipeline();
-                    // 将 LogEventDecoder 和 LogEventHandler 添加到 ChannelPipeline 中
-                    pipeline.addLast(new LogEventDecoder());
-                    pipeline.addLast(new LogEventHandler());
-                }
-            } )
-            .localAddress(address);
+                .channel(NioDatagramChannel.class)
+                // 设置套接字选项 SO_BROADCAST
+                .option(ChannelOption.SO_BROADCAST, true)
+                .handler(new ChannelInitializer<Channel>() {
+                    @Override
+                    protected void initChannel(Channel channel)
+                            throws Exception {
+                        ChannelPipeline pipeline = channel.pipeline();
+                        // 将 LogEventDecoder 和 LogEventHandler 添加到 ChannelPipeline 中
+                        pipeline.addLast(new LogEventDecoder());
+                        pipeline.addLast(new LogEventHandler());
+                    }
+                })
+                .localAddress(address);
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            throw new IllegalArgumentException(
+                    "Usage: LogEventMonitor <port>");
+        }
+        // 构造一个新的 LogEventMonitor
+        LogEventMonitor monitor = new LogEventMonitor(
+                new InetSocketAddress(Integer.parseInt(args[0])));
+        try {
+            Channel channel = monitor.bind();
+            System.out.println("LogEventMonitor running");
+            channel.closeFuture().sync();
+        } finally {
+            monitor.stop();
+        }
     }
 
     public Channel bind() {
@@ -44,22 +61,5 @@ public class LogEventMonitor {
 
     public void stop() {
         group.shutdownGracefully();
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            throw new IllegalArgumentException(
-            "Usage: LogEventMonitor <port>");
-        }
-        // 构造一个新的 LogEventMonitor
-        LogEventMonitor monitor = new LogEventMonitor(
-            new InetSocketAddress(Integer.parseInt(args[0])));
-        try {
-            Channel channel = monitor.bind();
-            System.out.println("LogEventMonitor running");
-            channel.closeFuture().sync();
-        } finally {
-            monitor.stop();
-        }
     }
 }

@@ -11,11 +11,11 @@ import static io.netty.channel.DummyChannelHandlerContext.DUMMY_INSTANCE;
 
 /**
  * Created by kerr.
- *
+ * <p>
  * 代码清单 6-6 从 ChannelHandlerContext 访问 Channel
- *
+ * <p>
  * 代码清单 6-7 通过 ChannelHandlerContext 访问 ChannelPipeline
- *
+ * <p>
  * Listing 6.8 Calling ChannelHandlerContext write()
  */
 public class WriteHandlers {
@@ -24,33 +24,30 @@ public class WriteHandlers {
 
     /**
      * 代码清单 6-6 从 ChannelHandlerContext 访问 Channel
-     * */
+     */
     public static void writeViaChannel() {
         ChannelHandlerContext ctx = CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE; // get reference form somewhere
         // 获取到与 ChannelHandlerContext相关联的 Channel 的引用
         Channel channel = ctx.channel();
         // 通过 Channel 写入缓冲区
-        channel.write(Unpooled.copiedBuffer("Netty in Action",
-                CharsetUtil.UTF_8));
-
+        // 调用Channel 上的 write ()方法将会导致写入事件从尾端到头部地流经 ChannelPipeline：
+        channel.write(Unpooled.copiedBuffer("Netty in Action", CharsetUtil.UTF_8));
     }
 
     /**
      * 代码清单 6-7 通过 ChannelHandlerContext 访问 ChannelPipeline
-     * */
+     */
     public static void writeViaChannelPipeline() {
         ChannelHandlerContext ctx = CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE; // get reference form somewhere
         // 获取到与 ChannelHandlerContext相关联的 ChannelPipeline 的引用
         ChannelPipeline pipeline = ctx.pipeline(); // get reference form somewhere
         // 通过 ChannelPipeline写入缓冲区
-        pipeline.write(Unpooled.copiedBuffer("Netty in Action",
-                CharsetUtil.UTF_8));
-
+        pipeline.write(Unpooled.copiedBuffer("Netty in Action", CharsetUtil.UTF_8));
     }
 
     /**
      * 代码清单 6-8 调用 ChannelHandlerContext 的 write()方法
-     * */
+     */
     public static void writeViaChannelHandlerContext() {
         // 获取到 ChannelHandlerContext 的引用
         ChannelHandlerContext ctx = CHANNEL_HANDLER_CONTEXT_FROM_SOMEWHERE; // get reference form somewhere;

@@ -15,7 +15,7 @@ public class ModifyChannelPipeline {
 
     /**
      * 代码清单 6-5 修改 ChannelPipeline
-     * */
+     */
     public static void modifyPipeline() {
         ChannelPipeline pipeline = CHANNEL_PIPELINE_FROM_SOMEWHERE; // get reference to pipeline;
         // 创建一个 FirstHandler 的实例
@@ -35,23 +35,20 @@ public class ModifyChannelPipeline {
         pipeline.replace("handler2", "handler4", new FourthHandler());
     }
 
-    private static final class FirstHandler
-        extends ChannelHandlerAdapter {
+
+    private static final class FirstHandler extends ChannelHandlerAdapter {
 
     }
 
-    private static final class SecondHandler
-        extends ChannelHandlerAdapter {
+    private static final class SecondHandler extends ChannelHandlerAdapter {
 
     }
 
-    private static final class ThirdHandler
-        extends ChannelHandlerAdapter {
+    private static final class ThirdHandler extends ChannelHandlerAdapter {
 
     }
 
-    private static final class FourthHandler
-        extends ChannelHandlerAdapter {
+    private static final class FourthHandler extends ChannelHandlerAdapter {
 
     }
 }

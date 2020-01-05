@@ -22,13 +22,6 @@ public class SecureChatServer extends ChatServer {
         this.context = context;
     }
 
-    @Override
-    protected ChannelInitializer<Channel> createInitializer(
-        ChannelGroup group) {
-        // 返回之前创建的 SecureChatServerInitializer 以启用加密
-        return new SecureChatServerInitializer(group, context);
-    }
-
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
             System.err.println("Please give port as argument");
@@ -47,5 +40,12 @@ public class SecureChatServer extends ChatServer {
             }
         });
         future.channel().closeFuture().syncUninterruptibly();
+    }
+
+    @Override
+    protected ChannelInitializer<Channel> createInitializer(
+            ChannelGroup group) {
+        // 返回之前创建的 SecureChatServerInitializer 以启用加密
+        return new SecureChatServerInitializer(group, context);
     }
 }

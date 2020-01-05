@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 
 /**
  * Created by kerr.
- *
+ * <p>
  * 代码清单 11-11 使用 FileRegion 传输文件的内容
  */
 public class FileRegionWriteHandler extends ChannelInboundHandlerAdapter {
@@ -27,16 +27,16 @@ public class FileRegionWriteHandler extends ChannelInboundHandlerAdapter {
                 in.getChannel(), 0, file.length());
         // 发送该 DefaultFileRegion，并注册一个 ChannelFutureListener
         channel.writeAndFlush(region).addListener(
-            new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future)
-               throws Exception {
-               if (!future.isSuccess()) {
-                   // 处理失败
-                   Throwable cause = future.cause();
-                   // Do something
-               }
-            }
-        });
+                new ChannelFutureListener() {
+                    @Override
+                    public void operationComplete(ChannelFuture future)
+                            throws Exception {
+                        if (!future.isSuccess()) {
+                            // 处理失败
+                            Throwable cause = future.cause();
+                            // Do something
+                        }
+                    }
+                });
     }
 }

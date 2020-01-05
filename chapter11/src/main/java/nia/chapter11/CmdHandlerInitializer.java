@@ -10,7 +10,8 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
 public class CmdHandlerInitializer extends ChannelInitializer<Channel> {
-    private static final byte SPACE = (byte)' ';
+    private static final byte SPACE = (byte) ' ';
+
     @Override
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
@@ -46,7 +47,7 @@ public class CmdHandlerInitializer extends ChannelInitializer<Channel> {
 
         @Override
         protected Object decode(ChannelHandlerContext ctx, ByteBuf buffer)
-            throws Exception {
+                throws Exception {
             // 从 ByteBuf 中提取由行尾符序列分隔的帧
             ByteBuf frame = (ByteBuf) super.decode(ctx, buffer);
             if (frame == null) {
@@ -64,10 +65,10 @@ public class CmdHandlerInitializer extends ChannelInitializer<Channel> {
     }
 
     public static final class CmdHandler
-        extends SimpleChannelInboundHandler<Cmd> {
+            extends SimpleChannelInboundHandler<Cmd> {
         @Override
         public void channelRead0(ChannelHandlerContext ctx, Cmd msg)
-            throws Exception {
+                throws Exception {
             // Do something with the command
             // 处理传经 ChannelPipeline 的 Cmd 对象
         }

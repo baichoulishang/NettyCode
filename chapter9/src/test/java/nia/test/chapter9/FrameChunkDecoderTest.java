@@ -8,7 +8,8 @@ import nia.chapter9.FrameChunkDecoder;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 代码清单9-6 测试 FrameChunkDecoder
@@ -28,7 +29,7 @@ public class FrameChunkDecoderTest {
 
         // 创建一个 EmbeddedChannel，并向其安装一个帧大小为 3 字节的 FixedLengthFrameDecoder
         EmbeddedChannel channel = new EmbeddedChannel(
-            new FrameChunkDecoder(3));
+                new FrameChunkDecoder(3));
 
         // 向它写入 2 字节，并断言它们将会产生一个新帧
         assertTrue(channel.writeInbound(input.readBytes(2)));

@@ -9,8 +9,7 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
  *
  * @author <a href="mailto:norman.maurer@gmail.com">Norman Maurer</a>
  */
-public class LineBasedHandlerInitializer extends ChannelInitializer<Channel>
-    {
+public class LineBasedHandlerInitializer extends ChannelInitializer<Channel> {
     @Override
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
@@ -21,11 +20,11 @@ public class LineBasedHandlerInitializer extends ChannelInitializer<Channel>
     }
 
     public static final class FrameHandler
-        extends SimpleChannelInboundHandler<ByteBuf> {
+            extends SimpleChannelInboundHandler<ByteBuf> {
         @Override
         // 传入了单个帧的内容
         public void channelRead0(ChannelHandlerContext ctx,
-            ByteBuf msg) throws Exception {
+                                 ByteBuf msg) throws Exception {
             // Do something with the data extracted from the frame
         }
     }

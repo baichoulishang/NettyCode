@@ -26,10 +26,25 @@ public class LogEventBroadcaster {
         bootstrap = new Bootstrap();
         // 引导该 NioDatagramChannel（无连接的）
         bootstrap.group(group).channel(NioDatagramChannel.class)
-             // 设置 SO_BROADCAST 套接字选项
-             .option(ChannelOption.SO_BROADCAST, true)
-             .handler(new LogEventEncoder(address));
+                // 设置 SO_BROADCAST 套接字选项
+                .option(ChannelOption.SO_BROADCAST, true)
+                .handler(new LogEventEncoder(address));
         this.file = file;
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            throw new IllegalArgumentException();
+        }
+        // 创建并启动一个新的 LogEventBroadcaster 的实例
+        LogEventBroadcaster broadcaster = new LogEventBroadcaster(
+                new InetSocketAddress("255.255.255.255",
+                        Integer.parseInt(args[0])), new File(args[1]));
+        try {
+            broadcaster.run();
+        } finally {
+            broadcaster.stop();
+        }
     }
 
     public void run() throws Exception {
@@ -37,7 +52,7 @@ public class LogEventBroadcaster {
         Channel ch = bootstrap.bind(0).sync().channel();
         long pointer = 0;
         // 启动主处理循环
-        for (;;) {
+        for (; ; ) {
             long len = file.length();
             if (len < pointer) {
                 // file was reset
@@ -52,7 +67,7 @@ public class LogEventBroadcaster {
                 while ((line = raf.readLine()) != null) {
                     // 对于每个日志条目，写入一个 LogEvent 到 Channel 中
                     ch.writeAndFlush(new LogEvent(null, -1,
-                    file.getAbsolutePath(), line));
+                            file.getAbsolutePath(), line));
                 }
                 // 存储其在文件中的当前位置
                 pointer = raf.getFilePointer();
@@ -70,21 +85,5 @@ public class LogEventBroadcaster {
 
     public void stop() {
         group.shutdownGracefully();
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            throw new IllegalArgumentException();
-        }
-        // 创建并启动一个新的 LogEventBroadcaster 的实例
-        LogEventBroadcaster broadcaster = new LogEventBroadcaster(
-                new InetSocketAddress("255.255.255.255",
-                    Integer.parseInt(args[0])), new File(args[1]));
-        try {
-            broadcaster.run();
-        }
-        finally {
-            broadcaster.stop();
-        }
     }
 }
