@@ -82,6 +82,7 @@ public class WebSocketConvertHandler extends
     public static final class MyWebSocketFrame {
         private final FrameType type;
         private final ByteBuf data;
+
         public MyWebSocketFrame(FrameType type, ByteBuf data) {
             this.type = type;
             this.data = data;
